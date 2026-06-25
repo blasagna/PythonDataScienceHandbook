@@ -1,0 +1,107 @@
+/* CSS Stylesheet to optimize Jupyter HTML rendering in WeasyPrint PDF output */
+
+@page {
+    size: letter;
+    margin: 0.6in 0.5in;
+}
+
+/* Constrain the notebook container */
+body.jp-Notebook {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    background-color: white !important;
+}
+
+/* Ensure cell containers don't exceed page width */
+.jp-Cell {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    display: block !important;
+}
+
+/* Flatten flex wrappers so WeasyPrint handles block elements correctly without clipping */
+.jp-Cell-inputWrapper, 
+.jp-Cell-outputWrapper,
+.jp-InputArea, 
+.jp-OutputArea,
+.jp-OutputArea-child {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Reduce prompt column width so it doesn't push code cells to the right */
+.jp-InputPrompt, 
+.jp-OutputPrompt {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    text-align: left !important;
+    padding: 2px 0 !important;
+    margin: 0 !important;
+    font-family: monospace !important;
+    font-size: 0.8em !important;
+    color: #888 !important;
+    border: none !important;
+    min-width: unset !important;
+}
+
+/* Output styling adjustments */
+.jp-OutputArea-output {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Prevent code cells and plain-text outputs from running off the page */
+pre, 
+code, 
+.jp-CodeMirror, 
+.CodeMirror-code, 
+.cm-content, 
+.jp-RenderedText pre {
+    white-space: pre-wrap !important;
+    word-break: break-all !important;
+    word-wrap: break-word !important;
+    overflow-x: visible !important;
+}
+
+/* Fix table wrapping issues */
+table.dataframe, 
+.jp-RenderedHTMLCommon table {
+    width: 100% !important;
+    max-width: 100% !important;
+    table-layout: auto !important;
+    word-break: break-all !important;
+    word-wrap: break-word !important;
+}
+
+/* Scale large images to fit the page boundaries */
+img, 
+.jp-RenderedImage img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0.5em auto !important;
+}
+
+/* Avoid split headings or split figures at page breaks */
+h1, h2, h3, h4, h5, h6 {
+    break-after: avoid;
+    page-break-after: avoid;
+}
+
+.jp-RenderedImage, 
+.jp-Cell-outputWrapper table {
+    break-inside: avoid;
+    page-break-inside: avoid;
+}

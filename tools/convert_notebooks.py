@@ -59,8 +59,9 @@ def main():
             html_file = os.path.join(notebooks_dir, f"{name_without_ext}.html")
             pdf_file = os.path.join(tmpdir, f"{name_without_ext}.pdf")
             
-            # Convert HTML to PDF using weasyprint
-            weasy_cmd = ["weasyprint", html_file, pdf_file]
+            # Convert HTML to PDF using weasyprint with custom stylesheet
+            weasy_css = os.path.join(script_dir, "weasyprint.css")
+            weasy_cmd = ["weasyprint", "-s", weasy_css, html_file, pdf_file]
             try:
                 subprocess.run(weasy_cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 pdf_paths.append(pdf_file)
